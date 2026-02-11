@@ -1,0 +1,160 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SessionStatus {
+  active
+  completed
+  cancelled
+}
+
+enum MediaKind {
+  photo
+  video
+}
+
+enum SyncState {
+  pending
+  synced
+  failed
+}
+
+model BoothSession {
+  id        String        @id
+  boothId   String
+  status    SessionStatus
+  startedAt DateTime
+  endedAt   DateTime?
+  syncState SyncState     @default(pending)
+  assets    MediaAsset[]
+  projects  EditProject[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model MediaAsset {
+  id         String      @id
+  sessionId  String
+  session    BoothSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  kind       MediaKind
+  localPath  String
+  previewPath String?
+  capturedAt DateTime
+  syncState  SyncState   @default(pending)
+  hash       String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@index([sessionId])
+}
+
+model EditProject {
+  id               String      @id
+  sessionId        String
+  session          BoothSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  selectedAssetIds Json
+  filterStack      Json
+  stickers         Json
+  templateId       String
+  renderStatus     String
+  outputPath       String?
+  syncState        SyncState   @default(pending)
+  shareLinks       ShareLink[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@index([sessionId])
+}
+
+model ShareLink {
+  id          String      @id
+  projectId   String
+  project     EditProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  publicToken String      @unique
+  url         String
+  expiresAt   DateTime?
+  createdAt   DateTime    @default(now())
+
+  @@index([projectId])
+}
+
+model Template {
+  id           String   @id
+  name         String
+  canvasWidth  Int
+  canvasHeight Int
+  canvasDpi    Int
+  slotsJson    Json
+  safeAreasJson Json
+  printProfileId String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model BrandProfile {
+  id               String   @id
+  logoAssetId      String
+  logoPlacementJson Json
+  qrPlacementJson   Json
+  defaultTheme     String
+  updatedAt        DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  actor     String
+  payload   Json
+  createdAt DateTime @default(now())
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
