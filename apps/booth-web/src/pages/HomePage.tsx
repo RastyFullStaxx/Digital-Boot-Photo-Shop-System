@@ -32,6 +32,17 @@ export function HomePage() {
         <p>
           Capture, choose, edit, collage, print, and sync customer photos with secure QR delivery.
         </p>
+        <div className="status-row">
+          <span className="status-chip">
+            <span className="pulse-dot" /> Live status
+          </span>
+          {healthQuery.data ? (
+            <span className="status-chip">Agent: {healthQuery.data.ok ? "Healthy" : "Down"}</span>
+          ) : (
+            <span className="status-chip">Agent: Checking...</span>
+          )}
+          <span className="status-chip">Auto-refresh: 3s</span>
+        </div>
       </header>
 
       <div className="panel-grid">

@@ -121,6 +121,26 @@ export function EditorPage() {
           <p className="badge">Project {projectId.slice(0, 8)}</p>
           <h1>Edit and Finalize</h1>
           <p>Preview filters/stickers before authoritative local-agent render.</p>
+          <div className="stepper">
+            <span className="step active">
+              <span className="dot" /> Capture
+            </span>
+            <span className="step active">
+              <span className="dot" /> Select
+            </span>
+            <span className="step active">
+              <span className="dot" /> Edit
+            </span>
+            <span className="step">
+              <span className="dot" /> Render
+            </span>
+            <span className="step">
+              <span className="dot" /> Print
+            </span>
+            <span className="step">
+              <span className="dot" /> Sync
+            </span>
+          </div>
         </div>
         <div className="header-actions">
           <button type="button" className="secondary" onClick={() => navigate(`/session/${sessionId}`)}>
@@ -175,6 +195,10 @@ export function EditorPage() {
 
         <article className="panel side-panel">
           <h2>Finalize</h2>
+          <div className="status-row">
+            <span className="status-chip">Auto-save: On</span>
+            <span className="status-chip">Quality: 4x6</span>
+          </div>
           <button type="button" className="primary" onClick={() => renderMutation.mutate()} disabled={renderMutation.isPending}>
             {renderMutation.isPending ? "Rendering..." : "Render Final Output"}
           </button>

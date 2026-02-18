@@ -68,6 +68,26 @@ export function GalleryPage() {
           <p className="badge">Session {sessionId.slice(0, 8)}</p>
           <h1>Guest Gallery</h1>
           <p>Select the best photos/videos before editing and print composition.</p>
+          <div className="stepper">
+            <span className="step active">
+              <span className="dot" /> Capture
+            </span>
+            <span className="step active">
+              <span className="dot" /> Select
+            </span>
+            <span className="step">
+              <span className="dot" /> Edit
+            </span>
+            <span className="step">
+              <span className="dot" /> Render
+            </span>
+            <span className="step">
+              <span className="dot" /> Print
+            </span>
+            <span className="step">
+              <span className="dot" /> Sync
+            </span>
+          </div>
         </div>
         <div className="header-actions">
           <Link className="secondary" to="/operator">
@@ -91,7 +111,13 @@ export function GalleryPage() {
           <p>
             <strong>{mediaCount}</strong> assets detected
           </p>
-          {mediaQuery.data ? (
+          {mediaQuery.isLoading ? (
+            <div className="skeleton-grid">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <div className="skeleton-card" key={`skeleton-${index}`} />
+              ))}
+            </div>
+          ) : mediaQuery.data ? (
             <MediaGrid media={mediaQuery.data} selectedAssetIds={selectedAssetIds} onToggle={(id) => toggleAsset(sessionId, id)} />
           ) : (
             <p>Loading media...</p>

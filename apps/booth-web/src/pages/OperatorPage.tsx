@@ -20,6 +20,12 @@ export function OperatorPage() {
           <p className="badge">Operator Console</p>
           <h1>Booth Status</h1>
           <p>Monitor local services and force sync when internet resumes.</p>
+          <div className="status-row">
+            <span className="status-chip">
+              <span className="pulse-dot" /> Monitoring
+            </span>
+            <span className="status-chip">Auto-refresh: 3s</span>
+          </div>
         </div>
         <div className="header-actions">
           <Link className="secondary" to="/">
