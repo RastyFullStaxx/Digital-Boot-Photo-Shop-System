@@ -6,7 +6,7 @@ export function OperatorPage() {
   const healthQuery = useQuery({
     queryKey: ["health", "operator"],
     queryFn: getHealth,
-    refetchInterval: 3000
+    refetchInterval: 2000
   });
 
   const syncMutation = useMutation({
@@ -24,7 +24,7 @@ export function OperatorPage() {
             <span className="status-chip">
               <span className="pulse-dot" /> Monitoring
             </span>
-            <span className="status-chip">Auto-refresh: 3s</span>
+            <span className="status-chip">Auto-refresh: 2s</span>
           </div>
         </div>
         <div className="header-actions">

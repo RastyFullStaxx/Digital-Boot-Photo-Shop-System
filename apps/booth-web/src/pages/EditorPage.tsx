@@ -106,7 +106,7 @@ export function EditorPage() {
     enabled: Boolean(printMutation.data?.id),
     refetchInterval: (query) => {
       const status = query.state.data?.status;
-      return status && ["printed", "failed"].includes(status) ? false : 1000;
+      return status && ["printed", "failed"].includes(status) ? false : 700;
     }
   });
 

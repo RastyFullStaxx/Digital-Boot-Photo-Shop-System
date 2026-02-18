@@ -33,6 +33,34 @@ body {
     radial-gradient(circle at 30% 80%, rgba(255, 255, 255, 0.4), transparent 60%);
 }
 
+body.kiosk {
+  cursor: none;
+}
+
+body.kiosk .page {
+  max-width: 1440px;
+  padding: 36px;
+}
+
+body.kiosk .primary,
+body.kiosk .secondary {
+  font-size: 1.05rem;
+  padding: 16px 22px;
+}
+
+body.kiosk .hero h1,
+body.kiosk .page-header h1 {
+  font-size: clamp(2.4rem, 3.6vw, 3.4rem);
+}
+
+body.kiosk .media-grid {
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+
+body.kiosk .panel {
+  padding: 24px;
+}
+
 button,
 input,
 select {
@@ -200,6 +228,16 @@ select {
   transition: border 160ms ease, transform 160ms ease;
 }
 
+.media-card .media-thumb img,
+.media-card .media-thumb video {
+  transition: transform 220ms ease;
+}
+
+.media-card:hover .media-thumb img,
+.media-card:hover .media-thumb video {
+  transform: scale(1.02);
+}
+
 .media-card.selected {
   border-color: var(--ink);
   transform: translateY(-2px);
@@ -272,6 +310,7 @@ input[type="range"] {
   max-width: 220px;
   border-radius: var(--radius-sm);
   border: 1px solid #d6dbe2;
+  animation: fade-in 240ms ease-out;
 }
 
 .result-box {
@@ -279,6 +318,7 @@ input[type="range"] {
   padding: 10px;
   border-radius: var(--radius-sm);
   background: #ffffffb8;
+  animation: fade-in 220ms ease-out;
 }
 
 .status-row {
@@ -358,6 +398,36 @@ input[type="range"] {
   animation: shimmer 1.6s infinite;
 }
 
+.floating-controls {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  display: grid;
+  gap: 10px;
+  z-index: 20;
+}
+
+.floating-controls .secondary {
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: var(--shadow-soft);
+}
+
+.toast {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: rgba(15, 23, 42, 0.92);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  animation: toast-in 220ms ease-out;
+  z-index: 30;
+}
+
 @media (min-width: 960px) {
   .panel-grid {
     grid-template-columns: 2fr 1fr;
@@ -389,6 +459,28 @@ input[type="range"] {
   from {
     opacity: 0;
     transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
   to {
     opacity: 1;

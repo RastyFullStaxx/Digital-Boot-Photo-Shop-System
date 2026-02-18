@@ -8,13 +8,13 @@ export function HomePage() {
   const healthQuery = useQuery({
     queryKey: ["health"],
     queryFn: getHealth,
-    refetchInterval: 5000
+    refetchInterval: 2000
   });
 
   const activeSessionQuery = useQuery({
     queryKey: ["active-session"],
     queryFn: getActiveSession,
-    refetchInterval: 3000
+    refetchInterval: 1500
   });
 
   const createSessionMutation = useMutation({
@@ -41,7 +41,7 @@ export function HomePage() {
           ) : (
             <span className="status-chip">Agent: Checking...</span>
           )}
-          <span className="status-chip">Auto-refresh: 3s</span>
+          <span className="status-chip">Auto-refresh: 2s</span>
         </div>
       </header>
 

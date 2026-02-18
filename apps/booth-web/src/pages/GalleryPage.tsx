@@ -19,7 +19,7 @@ export function GalleryPage() {
     queryKey: ["session-media", sessionId],
     queryFn: () => listSessionMedia(sessionId),
     enabled: Boolean(sessionId),
-    refetchInterval: 2000
+    refetchInterval: 1000
   });
 
   const templatesQuery = useQuery({
