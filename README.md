@@ -1,6 +1,6 @@
 # Digital Boot Photo Shop System
 
-Offline-first photobooth platform for capture ingest, guest media selection, photo editing, branded print generation, and QR-based digital 
+Offline-first photobooth platform for capture ingest, guest media selection, photo editing, branded print generation, and QR-based digital..
 
 ## Overview
 
