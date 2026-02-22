@@ -22,3 +22,5 @@ app
     app.log.error({ error }, "Failed to start local agent");
     process.exit(1);
   });
+
+
