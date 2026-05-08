@@ -257,7 +257,6 @@ GitHub Actions workflow at `.github/workflows/ci.yml` runs:
 - build
 - test
 
-
 ## Contribution Guidelines
 
 - Keep contracts in `packages/shared-types` as source of truth
