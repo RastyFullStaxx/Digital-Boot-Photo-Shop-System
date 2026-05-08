@@ -9,6 +9,7 @@ export function OperatorPage() {
     refetchInterval: 2000
   });
 
+  
   const syncMutation = useMutation({
     mutationFn: triggerSync
   });
